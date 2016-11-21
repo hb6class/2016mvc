@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.mvc2.core.SqlTemplate;
+
 public class GuestDao {
 	private Logger logger = Logger.getLogger(this.getClass());
 	private static final String driver = "oracle.jdbc.OracleDriver";
@@ -30,6 +32,9 @@ public class GuestDao {
 		} catch (SQLException e) {
 			logger.error(e.getMessage());			
 		}
+	}
+	public void setConn(Connection conn) {
+		this.conn = conn;
 	}
 
 	public List<GuestVo> selectAll() {
@@ -57,25 +62,6 @@ public class GuestDao {
 		return list;
 	}
 
-	public void insertOne(GuestVo vo) {
-		String sql = "insert into guest values (?,?,sysdate,?)";
-		try {
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, vo.getSabun());
-			pstmt.setString(2, vo.getName());
-			pstmt.setInt(3, vo.getPay());
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-				try {
-					if(pstmt!=null)pstmt.close();
-					if(conn!=null)conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-		}
-	}
 
 	public GuestVo selectOne(int sabun) {
 		String sql ="select * from guest where sabun=?";
@@ -102,27 +88,45 @@ public class GuestDao {
 		}
 		return null;
 	}
-
+	
+//	public void executeUpdate(String sql,GuestVo vo){
+//		try {
+//			pstmt=conn.prepareStatement(sql);
+//			pstmt.setInt(1, vo.getSabun());
+//			pstmt.setString(2, vo.getName());
+//			pstmt.setInt(3, vo.getPay());
+//			pstmt.executeUpdate();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if(pstmt!=null)pstmt.close();
+//				if(conn.getAutoCommit()==false)conn.rollback();
+//				if(conn!=null)conn.close();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
+	
+	public void insertOne(GuestVo vo) {
+		
+		new SqlTemplate().executeUpdate("insert into guest values (?,?,sysdate,?)"
+				,new Object[]{vo.getSabun(),vo.getName(),vo.getPay()});
+	}
+	
 	public void updateOne(GuestVo vo) {
 		String sql = "update guest set name=?,pay=? where sabun=?";
-		try {
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getName());
-			pstmt.setInt(2, vo.getPay());
-			pstmt.setInt(3, vo.getSabun());
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(pstmt!=null)pstmt.close();
-				if(conn!=null)conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		Object[] obj = {vo.getName(),vo.getPay(),vo.getSabun()};
+		new SqlTemplate().executeUpdate(sql, obj);
 		
 	}
+	
+	public void deleteOne(int sabun){
+		new SqlTemplate().executeUpdate("delete from guest where sabun=?"
+				, new Object[]{sabun});
+	}
+	
 }
 
 

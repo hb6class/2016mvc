@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.apache.log4j.pattern.LogEvent;
 
+import com.mvc2.controller.DeleteImp;
 import com.mvc2.controller.DetailImp;
 import com.mvc2.controller.IndexImp;
 import com.mvc2.controller.InsertOneImp;
@@ -51,7 +52,7 @@ public class DispatcherServlet extends HttpServlet {
 		}else if(path.equals("/update.do")){
 			ic = new UpdateImp();
 		}else if(path.equals("/delete.do")){
-			
+			ic = new DeleteImp();
 		}
 		
 		String url=ic.execute(request, response);
