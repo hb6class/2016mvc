@@ -15,52 +15,24 @@ public class GuestDaoTest {
 	private static final String password = "tiger";
 
 	@Test
-	public void testSelectAll() {
+	public void testCRUD() {
 		GuestDao dao = new GuestDao();
-		List<GuestVo> list = dao.selectAll();
+		GuestVo vo = new GuestVo(9999, "test", null, 9000);
+		dao.insertOne(vo);
+		dao = new GuestDao();
+		List list = dao.selectAll();
 		assertNotNull(list);
-		assertTrue(list.size()>0);
-		for(GuestVo vo:list){
-			System.out.println(vo);
-		}
+		dao = new GuestDao();
+		GuestVo bean = dao.selectOne(9999);
+		assertEquals(vo, bean);
+		dao = new GuestDao();
+		vo = new GuestVo(9999, "test2", null, 9900);
+		dao.updateOne(vo);
+		assertEquals(vo, new GuestDao().selectOne(9999));
+		dao = new GuestDao();
+		dao.deleteOne(9999);
+		assertNull(new GuestDao().selectOne(9999));
 	}
-	@Test
-	public void testSelectOne(){
-		int sabun=1111;
-		GuestDao dao = new GuestDao();
-		GuestVo vo=dao.selectOne(sabun);
-		assertNotNull(vo);
-		assertEquals(sabun, vo.getSabun());
-		GuestVo bean= new GuestVo(sabun, "aaaa", null, 1000);
-		assertEquals(bean, vo);
-	}
-//	@Test
-//	public void testInsertOne() throws Exception{
-//		Class.forName(driver);
-//		Connection conn = DriverManager.getConnection(url, user, password);
-//		conn.setAutoCommit(false);
-//		GuestDao dao = new GuestDao();
-//		dao.setConn(conn);
-//		GuestVo vo = new GuestVo(8888, "abc", null, 8800);
-//		dao.insertOne(vo);	
-//	}
-//	
-//	@Test
-//	public void testUpdateOne() throws Exception{
-////		Class.forName(driver);
-////		Connection conn = DriverManager.getConnection(url, user, password);
-////		conn.setAutoCommit(false);
-//		GuestDao dao = new GuestDao();
-////		dao.setConn(conn);
-//		GuestVo vo = new GuestVo(1111, "aaaa", null, 1004);
-//		dao.updateOne(vo);
-//		dao = new GuestDao();
-//		assertEquals(vo, dao.selectOne(1111));
-//		dao = new GuestDao();
-//		vo = new GuestVo(1111, "aaaa", null, 1000);
-//		dao.updateOne(vo);
-//		
-//	}
 }
 
 
