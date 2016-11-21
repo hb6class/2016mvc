@@ -8,33 +8,40 @@ import javax.servlet.http.HttpServletResponse;
 import com.mvc2.model.GuestDao;
 import com.mvc2.model.GuestVo;
 
-public class InsertOneImp implements InterController {
+public class UpdateImp implements InterController {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse res) {
-		// GET방식의 경우 입력폼페이지로 
 		if(req.getMethod().equals("GET")){
-			req.setAttribute("title", "입력");
+			int sabun=Integer.parseInt(req.getParameter("idx"));
+			GuestDao dao = new GuestDao();
+			GuestVo vo = dao.selectOne(sabun);
+			req.setAttribute("title", "수정");
+			req.setAttribute("dto", vo);
 			return "guest/add";
-			}
-		// POST방식의 경우 DB에 값 입력후 결과
-		GuestDao dao = new GuestDao();
-		String[] params = new String[3];
-//		params[0]=req.getParameter("sabun");
-//		params[1]=req.getParameter("name");
-//		params[2]=req.getParameter("pay");
+		}
+		String[] params= new String[3];
 		int idx=0;
 		Enumeration<String> pNm = req.getParameterNames();
 		while(pNm.hasMoreElements()){
-			params[idx++]=req.getParameter(pNm.nextElement());
+			String name = pNm.nextElement();
+			if(name.equals("idx"))continue;
+			params[idx++]=req.getParameter(name);
 		}
 		int sabun = Integer.parseInt(params[0]);
 		String name = params[1];
 		int pay = Integer.parseInt(params[2]);
-		GuestVo vo = new GuestVo(sabun,name,null,pay);
-		System.out.println(vo);
-		dao.insertOne(vo);
+		GuestVo vo = new GuestVo(sabun, name, null, pay);
+		GuestDao dao = new GuestDao();
+		dao.updateOne(vo);
 		return "guest/result";
 	}
 
 }
+
+
+
+
+
+
+

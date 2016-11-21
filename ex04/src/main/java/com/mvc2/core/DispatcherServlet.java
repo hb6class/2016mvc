@@ -16,6 +16,7 @@ import com.mvc2.controller.IndexImp;
 import com.mvc2.controller.InsertOneImp;
 import com.mvc2.controller.InterController;
 import com.mvc2.controller.ListImp;
+import com.mvc2.controller.UpdateImp;
 
 public class DispatcherServlet extends HttpServlet {
 	static Logger logger = Logger.getLogger("com.mvc2.core.DispatcherServlet");
@@ -47,6 +48,10 @@ public class DispatcherServlet extends HttpServlet {
 			ic = new InsertOneImp();
 		}else if(path.equals("/detail.do")){
 			ic = new DetailImp();
+		}else if(path.equals("/update.do")){
+			ic = new UpdateImp();
+		}else if(path.equals("/delete.do")){
+			
 		}
 		
 		String url=ic.execute(request, response);

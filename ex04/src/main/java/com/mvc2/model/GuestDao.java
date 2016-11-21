@@ -102,6 +102,27 @@ public class GuestDao {
 		}
 		return null;
 	}
+
+	public void updateOne(GuestVo vo) {
+		String sql = "update guest set name=?,pay=? where sabun=?";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getName());
+			pstmt.setInt(2, vo.getPay());
+			pstmt.setInt(3, vo.getSabun());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+				if(conn!=null)conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 }
 
 
