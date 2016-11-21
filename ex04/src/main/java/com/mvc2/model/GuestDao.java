@@ -56,6 +56,26 @@ public class GuestDao {
 		
 		return list;
 	}
+
+	public void insertOne(GuestVo vo) {
+		String sql = "insert into guest values (?,?,sysdate,?)";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, vo.getSabun());
+			pstmt.setString(2, vo.getName());
+			pstmt.setInt(3, vo.getPay());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+				try {
+					if(pstmt!=null)pstmt.close();
+					if(conn!=null)conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+	}
 }
 
 

@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.pattern.LogEvent;
 
 import com.mvc2.controller.IndexImp;
+import com.mvc2.controller.InsertOneImp;
 import com.mvc2.controller.InterController;
 import com.mvc2.controller.ListImp;
 
@@ -41,6 +42,8 @@ public class DispatcherServlet extends HttpServlet {
 			ic = new IndexImp();
 		}else if(path.equals("/list.do")){
 			ic = new ListImp();
+		}else if(path.equals("/add.do")){
+			ic = new InsertOneImp();
 		}
 		
 		String url=ic.execute(request, response);
