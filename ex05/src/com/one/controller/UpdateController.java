@@ -22,10 +22,8 @@ public class UpdateController extends HttpServlet {
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		
-		Map<String, String> map = new HashMap<String, String>();
 		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 		String data = br.readLine();//sabun=3333&name=cccc&pay=3000
-		System.out.println(data);
 		StringTokenizer st = new StringTokenizer(data,"&");
 		String[] params= new String[3];
 		int cnt=0;

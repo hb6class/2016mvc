@@ -93,15 +93,14 @@
 				var sabun =$(".page4 input").eq(0).val();
 				var name =$(".page4 input").eq(1).val();
 				var pay =$(".page4 input").eq(2).val();
-				alert(sabun+name+pay);
 				$.ajax({
-						"url":"edit.do",
+						"url":"edit.do",	//"delete.do",
 						"data":{
 							"name":name,
 							"pay":pay,
 							"sabun":sabun
 						},
-						"method":"put",
+						"method":"put",//"delete",	//
 						"error":function(jqXHR, textStatus){
 							alert(textStatus);
 						},
