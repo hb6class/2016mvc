@@ -51,10 +51,12 @@ public class GuestVo {
 		this.pay = pay;
 	}
 
+	
+	//"{\"sabun\":\""+"\",\"name:\""+"\",\"nalja\":\""+"\",pay:\""+"\"}"
 	@Override
 	public String toString() {
-		return "GuestVo [sabun=" + sabun + ", name=" + name + ", nalja="
-				+ nalja + ", pay=" + pay + "]";
+		return "{\"sabun\":\"" + sabun + "\", \"name\":\"" + name + "\", \"nalja\":\""
+				+ nalja + "\", \"pay\":\"" + pay + "\"}";
 	}
 	
 }

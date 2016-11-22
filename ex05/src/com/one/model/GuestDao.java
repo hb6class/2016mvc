@@ -30,4 +30,8 @@ public class GuestDao {
 		};		
 		return new SqlTemplate().executeList("select * from guest", mapper);
 	}
+	
+	public void insertOne(Object[] obj){
+		new SqlTemplate().executeUpdate("insert into guest values (?,?,sysdate,?)", obj);
+	}
 }
