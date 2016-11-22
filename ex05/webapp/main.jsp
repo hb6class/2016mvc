@@ -12,10 +12,10 @@
 <script type="text/javascript">
 	
 	$(document).ready(function(){
-		$(".page2,.page3").hide();
+		$(".page2,.page3,.page4").hide();
 		
 		$(".menu>a").eq(0).click(function() {
-		$(".page1,.page3").hide();
+		$(".page1,.page3,.page4").hide();
 		$(".page2").show();
 			//alert("첫번째 버튼 클릭됨");
 			$.ajax("list.do",{
@@ -41,7 +41,7 @@
 		});//a-0 end
 		
 		$(".menu>a").eq(1).click(function() {
-			$(".page1,.page2").hide();
+			$(".page1,.page2,.page4").hide();
 			$(".page3").show();
 			return false;
 		});//a-1 end
@@ -68,9 +68,24 @@
 				name = $("#name").val("");
 				pay = $("#pay").val("");
 			return false;
-		});
+		});//add form end
+		
+		$(".page2").on("click","div",function(e) {
+			$(".page1,.page2,.page3").hide();
+			$(".page4").show();
+			var sabun=$(this).children("span").eq(0).text();
+			$.post("detail.do",{"sabun":sabun},function(data){
+				temp=$(".page4").find(".data");
+				$(temp[0]).text(data.detail[0].sabun);
+				$(temp[1]).text(data.detail[0].name);
+				$(temp[2]).text(data.detail[0].nalja);
+				$(temp[3]).text(data.detail[0].pay);
+				}
+			);//post end
+		});//click div end
+		
 	});// ready end
-
+	var temp;
 </script>
 <title>Insert title here</title>
 </head>
@@ -105,6 +120,13 @@
 		</p>
 		<p><button type="submit">입력</button></p>
 		</form>
+	</div>
+	<div class="page4">
+		<h1>상세페이지</h1>
+		<p><span>sabun</span><span class="data"></span></p>
+		<p><span>name</span><span class="data"></span></p>
+		<p><span>nalja</span><span class="data"></span></p>
+		<p><span>pay</span><span class="data"></span></p>
 	</div>
 </body>
 </html>
